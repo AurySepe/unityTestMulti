@@ -10,23 +10,41 @@ public class SyncChildren : MonoBehaviour,IPunObservable
     // Start is called before the first frame update
 
     private Transform[] childrens;
-    private void Start()
+   
+
+    private bool ischildrenSet = false;
+    
+
+
+    private void Update()
     {
-        childrens = new Transform[transform.childCount];
-        int i = 0;
-        foreach (Transform child in transform)
+        if (!ischildrenSet && transform.childCount != 10)
         {
-            childrens[i] = child;
-            i++;
+            childrens = new Transform[transform.childCount];
+            int i = 0;
+            foreach (Transform child in transform)
+            {
+                childrens[i] = child;
+                i++;
+            }
+        
+            ischildrenSet = true;
         }
         
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if(childrens == null)
+        if (childrens == null)
+        {
             return;
+        }
+        
         if (stream.IsWriting) {
+            print("i am writing");
+            print(childrens.Length);
             for (int i = 0; i < childrens.Length; i++) {
+                print(childrens[i].name);
+                
                 if (childrens[i] != null) {
                     stream.SendNext(childrens[i].localPosition);
                     stream.SendNext(childrens[i].localRotation);
