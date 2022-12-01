@@ -19,16 +19,19 @@ public class SyncChildren : MonoBehaviour,IPunObservable
             childrens[i] = child;
             i++;
         }
-        print("Figli "+childrens);
+        
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if(childrens == null)
+            return;
         if (stream.IsWriting) {
             for (int i = 0; i < childrens.Length; i++) {
                 if (childrens[i] != null) {
                     stream.SendNext(childrens[i].localPosition);
                     stream.SendNext(childrens[i].localRotation);
                     stream.SendNext(childrens[i].localScale);
+                    
                 }
             }
         } else {
@@ -37,6 +40,7 @@ public class SyncChildren : MonoBehaviour,IPunObservable
                     childrens[i].localPosition = (Vector3)stream.ReceiveNext();
                     childrens[i].localRotation = (Quaternion)stream.ReceiveNext();
                     childrens[i].localScale = (Vector3)stream.ReceiveNext();
+                    
                 }
             }
         }
