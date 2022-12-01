@@ -18,7 +18,7 @@ public class SyncChildren : MonoBehaviour,IPunObservable
 
     private void Update()
     {
-        if (!ischildrenSet && transform.childCount != 10)
+        if (!ischildrenSet && transform.childCount == 10)
         {
             childrens = new Transform[transform.childCount];
             int i = 0;
@@ -29,12 +29,13 @@ public class SyncChildren : MonoBehaviour,IPunObservable
             }
         
             ischildrenSet = true;
+            print("i figli sono stati settati");
         }
         
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (childrens == null)
+        if (!ischildrenSet)
         {
             return;
         }
@@ -43,7 +44,6 @@ public class SyncChildren : MonoBehaviour,IPunObservable
             print("i am writing");
             print(childrens.Length);
             for (int i = 0; i < childrens.Length; i++) {
-                print(childrens[i].name);
                 
                 if (childrens[i] != null) {
                     stream.SendNext(childrens[i].localPosition);
@@ -55,7 +55,9 @@ public class SyncChildren : MonoBehaviour,IPunObservable
         } else {
             for (int i = 0; i < childrens.Length; i++) {
                 if (childrens[i] != null) {
+                    
                     childrens[i].localPosition = (Vector3)stream.ReceiveNext();
+                    print(childrens[i].localPosition);
                     childrens[i].localRotation = (Quaternion)stream.ReceiveNext();
                     childrens[i].localScale = (Vector3)stream.ReceiveNext();
                     
