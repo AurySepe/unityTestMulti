@@ -19,6 +19,7 @@ public class SyncChildren : MonoBehaviour,IPunObservable
             childrens[i] = child;
             i++;
         }
+        print("Figli "+childrens);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
