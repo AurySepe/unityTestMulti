@@ -157,3 +157,4 @@ MonoBehaviour:
   _isLocal: 1
   m_avatarToUseInZipFolder: 2
   m_instantiationData: 0
+  _underscorePostfix: 1
