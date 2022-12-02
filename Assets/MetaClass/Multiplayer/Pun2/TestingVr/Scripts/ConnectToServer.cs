@@ -6,6 +6,8 @@ using UnityEngine;
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
+
+    public GameObject player;
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -35,7 +37,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Room Joined");
-        PhotonNetwork.Instantiate("Network Avatar", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate(player.name, Vector3.zero, Quaternion.identity);
     }
 
     // Update is called once per frame

@@ -54,10 +54,12 @@ public class SyncChildren : MonoBehaviour,IPunObservable
             }
         } else {
             for (int i = 0; i < childrens.Length; i++) {
-                if (childrens[i] != null) {
-                    
-                    childrens[i].localPosition = (Vector3)stream.ReceiveNext();
-                    print(childrens[i].localPosition);
+                if (childrens[i] != null)
+                {
+
+                    Vector3 localPosition = (Vector3)stream.ReceiveNext();
+                    childrens[i].localPosition = localPosition;
+                    Debug.Log($"<color=green>updated local position of {childrens[i].name},  value now:{childrens[i].localPosition} update value:{localPosition}</color>");
                     childrens[i].localRotation = (Quaternion)stream.ReceiveNext();
                     childrens[i].localScale = (Vector3)stream.ReceiveNext();
                     
