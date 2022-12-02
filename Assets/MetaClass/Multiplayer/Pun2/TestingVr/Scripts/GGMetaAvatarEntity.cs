@@ -8,6 +8,7 @@ using System;
 
 public class GGMetaAvatarEntity : OvrAvatarEntity
 {
+    private const string logScope = "GGMetaAvatarEntity";
     [SerializeField] int m_avatarToUseInZipFolder = 2;
     PhotonView m_photonView;
     List<byte[]> m_streamedDataList = new List<byte[]>();
@@ -15,6 +16,20 @@ public class GGMetaAvatarEntity : OvrAvatarEntity
     [SerializeField] ulong m_instantiationData;
     float m_cycleStartTime = 0;
     float m_intervalToSendData = 0.08f;
+    [Tooltip("Adds an underscore between the path and the postfix.")]
+    [SerializeField]
+    private bool _underscorePostfix = true;
+    private bool _highQuality = false;
+    private string _overridePostfix = String.Empty;
+    private bool HasLocalAvatarConfigured => _assets.Count > 0;
+    
+    private List<AssetData> _assets = new List<AssetData> { new AssetData { source = SampleAvatarEntity.AssetSource.Zip, path = "0" } };
+
+    private struct AssetData
+    {
+        public SampleAvatarEntity.AssetSource source;
+        public string path;
+    }
 
     protected override void Awake()
     {
@@ -24,9 +39,12 @@ public class GGMetaAvatarEntity : OvrAvatarEntity
 
     private void Start()
     {
-        m_instantiationData = GetUserIdFromPhotonInstantiationData();
-        _userId = m_instantiationData;
-        StartCoroutine(TryToLoadUser());
+        //m_instantiationData = GetUserIdFromPhotonInstantiationData();
+        //_userId = m_instantiationData;
+        //_userId = 1;
+
+        //StartCoroutine(TryToLoadUser());
+        LoadLocalAvatar();
     }
 
     void ConfigureAvatarEntity()
@@ -116,6 +134,43 @@ public class GGMetaAvatarEntity : OvrAvatarEntity
         object [] instantiationData = photonView.InstantiationData;
         Int64 data_as_int = (Int64)instantiationData[0];
         return Convert.ToUInt64(data_as_int);
+    }
+    
+    private void LoadLocalAvatar()
+    {
+        if (!HasLocalAvatarConfigured)
+        {
+            OvrAvatarLog.LogInfo("No local avatar asset configured", logScope, this);
+            return;
+        }
+
+        // Zip asset paths are relative to the inside of the zip.
+        // Zips can be loaded from the OvrAvatarManager at startup or by calling OvrAvatarManager.Instance.AddZipSource
+        // Assets can also be loaded individually from Streaming assets
+        var path = new string[1];
+        foreach (var asset in _assets)
+        {
+            bool isFromZip = (asset.source == SampleAvatarEntity.AssetSource.Zip);
+
+            string assetPostfix = (_underscorePostfix ? "_" : "")
+                                  + OvrAvatarManager.Instance.GetPlatformGLBPostfix(isFromZip)
+                                  + OvrAvatarManager.Instance.GetPlatformGLBVersion(_highQuality, isFromZip)
+                                  + OvrAvatarManager.Instance.GetPlatformGLBExtension(isFromZip);
+            if (!String.IsNullOrEmpty(_overridePostfix))
+            {
+                assetPostfix = _overridePostfix;
+            }
+
+            path[0] = asset.path + assetPostfix;
+            if(isFromZip)
+            {
+                LoadAssetsFromZipSource(path);
+            }
+            else
+            {
+                LoadAssetsFromStreamingAssets(path);
+            }
+        }
     }
 
 }

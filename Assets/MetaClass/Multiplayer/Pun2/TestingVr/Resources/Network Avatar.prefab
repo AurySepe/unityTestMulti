@@ -10,10 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7339319552448131245}
   - component: {fileID: 7339319552448131240}
-  - component: {fileID: 7339319552448131247}
   - component: {fileID: 7339319552448131246}
   - component: {fileID: 2140784446826806601}
-  - component: {fileID: 5745231694151362975}
   - component: {fileID: 8137573116467830445}
   m_Layer: 0
   m_Name: Network Avatar
@@ -57,23 +55,9 @@ MonoBehaviour:
   observableSearch: 1
   ObservedComponents:
   - {fileID: 7339319552448131246}
-  - {fileID: 5745231694151362975}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7339319552448131247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7339319552448131235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d3d43f39b1ea44488583c2de22e0a40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SampleAvatarEntity: {fileID: 0}
 --- !u!114 &7339319552448131246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,18 +87,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
---- !u!114 &5745231694151362975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7339319552448131235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 740a791634f80ca41a4d699062e79b1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8137573116467830445
 MonoBehaviour:
   m_ObjectHideFlags: 0
