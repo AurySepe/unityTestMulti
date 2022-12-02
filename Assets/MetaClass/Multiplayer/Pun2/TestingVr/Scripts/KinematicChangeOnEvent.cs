@@ -14,12 +14,7 @@ public class KinematicChangeOnEvent : MonoBehaviour
         _object = GetComponent<Rigidbody>();
         _photonView = GetComponent<PhotonView>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public void ToggleKinematicHandeler()
     {
@@ -32,9 +27,11 @@ public class KinematicChangeOnEvent : MonoBehaviour
     [PunRPC]
     public void ToggleKinematic()
     {
-        if (_object)
+        if (_object != null)
         {
+            print("prima " + _object.isKinematic);
             _object.isKinematic = !_object.isKinematic;
+            print("dopo " + _object.isKinematic);
         }
     }
 }
