@@ -13,6 +13,8 @@ public class KinematicChangeOnEvent : MonoBehaviour
     {
         _object = GetComponent<Rigidbody>();
         _photonView = GetComponent<PhotonView>();
+
+        _object.isKinematic = false;
     }
     
 
