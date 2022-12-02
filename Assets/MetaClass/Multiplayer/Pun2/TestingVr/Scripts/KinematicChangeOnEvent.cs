@@ -20,9 +20,20 @@ public class KinematicChangeOnEvent : MonoBehaviour
 
     public void ToggleKinematicHandeler()
     {
-        if (_photonView.IsMine)
+        StartCoroutine(ToggleKinematicHandelerC());
+    }
+
+    IEnumerator ToggleKinematicHandelerC()
+    {
+        yield return WaitForMine();
+        _photonView.RPC("ToggleKinematic", RpcTarget.Others);
+    }
+
+    IEnumerator WaitForMine()
+    {
+        while (!_photonView.IsMine)
         {
-            _photonView.RPC("ToggleKinematic", RpcTarget.Others);
+            yield return null;
         }
     }
 
