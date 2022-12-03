@@ -126,7 +126,7 @@ public class WhiteboardMarker : MonoBehaviour
                     VibrationManager.singleton.TriggerVibration(20,2,1,ControllerThatIsGrabbing());
                     _AudioSource.Play();
 
-                    var interation = (_penSize / distance)/3;
+                    var interation = (_penSize / distance)/2;
 
                     var i = 0;
                     

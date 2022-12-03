@@ -20,9 +20,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/MetaClass/Multiplayer/Pun2/Scene/Room for 4.unity
     guid: eb1d02c774e2ad54fb88e53e5e76875b
-  - enabled: 1
+  - enabled: 0
     path: Assets/MetaClass/Multiplayer/Pun2/SyncChildTest/SynchScene.unity
     guid: 9f3b0812dec340246bceae24d564c77e
+  - enabled: 1
+    path: Assets/MetaClass/Multiplayer/Pun2/TestingVr/VrMultiTest.unity
+    guid: 31ff6e7ce402a9e4a925450bf056f28c
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260,
       type: 2}
